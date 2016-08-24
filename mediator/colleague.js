@@ -1,0 +1,23 @@
+const Colleague = function (id,mediator){
+  this.id = id;
+  this.mediator = mediator;
+};
+
+Colleague.prototype.receiveMessage = function (message) {
+  console.log('Module: ', this.id, 'Message: ', message);
+  return true;
+};
+
+Colleague.prototype.sendMessage = function (message, recipientId) {
+  (recipientId) ? this.mediator.send(recipientId, message) : this.mediator.broadcast(message, this);
+};
+
+const Create = {
+  create: function(id, mediator) {
+    const that = new Colleague(id, mediator);
+    mediator.register(that);
+    return that;
+  }
+};
+
+export default Create;
